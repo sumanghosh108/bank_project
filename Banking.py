@@ -1,14 +1,18 @@
+from db_config import get_db_config
 import mysql.connector
 from datetime import date
+
+def get_connection():
+    return mysql.connector.connect(**get_db_config())
 
 def clear():
     for _ in range(65):
         print()
 
+
+
 def account_status(acno):
-    conn = mysql.connector.connect(
-        host='localhost', database='bankproject', user='root', password='sum@1@mysql#74Z'
-    )
+    conn = get_connection()
     cursor = conn.cursor()
     sql = "SELECT status, balance FROM customer WHERE acno=%s"
     cursor.execute(sql, (acno,))
@@ -17,9 +21,7 @@ def account_status(acno):
     return result
 
 def deposite_amount():
-    conn = mysql.connector.connect(
-        host='localhost', database='bankproject', user='root', password='sum@1@mysql#74Z'
-    )
+    conn = get_connection()
     cursor = conn.cursor()
     clear()
     acno = input('Enter account No :')
@@ -39,9 +41,7 @@ def deposite_amount():
     conn.close()
 
 def withdraw_amount():
-    conn = mysql.connector.connect(
-        host='localhost', database='bankproject', user='root', password='sum@1@mysql#74Z'
-    )
+    conn = get_connection()
     cursor = conn.cursor()
     clear()
     acno = input('Enter account No :')
@@ -77,9 +77,7 @@ def transaction_menu():
             break
 
 def search_menu():
-    conn = mysql.connector.connect(
-        host='localhost', database='bankproject', user='root', password='sum@1@mysql#74Z'
-    )
+    conn = get_connection()
     cursor = conn.cursor()
     while True:
         clear()
@@ -129,9 +127,7 @@ def search_menu():
 def account_details():
     clear()
     acno = input('Enter account no :')
-    conn = mysql.connector.connect(
-        host='localhost', database='bankproject', user='root', password='sum@1@mysql#74Z'
-    )
+    conn = get_connection()
     cursor = conn.cursor()
     sql = 'SELECT * FROM customer WHERE acno = %s'
     sql1 = 'SELECT tid, dot, amount, type FROM transaction WHERE acno = %s'
@@ -160,12 +156,7 @@ def account_details():
 
 def add_account():
     try:
-        conn = mysql.connector.connect(
-            host='localhost', 
-            database='bankproject', 
-            user='root', 
-            password='sum@1@mysql#74Z'
-        )
+        conn = get_connection()
         cursor = conn.cursor()
         
         # Get user input
@@ -208,9 +199,7 @@ def add_account():
             conn.close()
 
 def modify_account():
-    conn = mysql.connector.connect(
-        host='localhost', database='bankproject', user='root', password='sum@1@mysql#74Z'
-    )
+    conn = get_connection()
     cursor = conn.cursor()
     acno = input('Enter customer Account No :')
     print('Modify screen ')
@@ -237,9 +226,7 @@ def modify_account():
     conn.close()
 
 def close_account():
-    conn = mysql.connector.connect(
-        host='localhost', database='bankproject', user='root', password='sum@1@mysql#74Z'
-    )
+    conn = get_connection()
     cursor = conn.cursor()
     clear()
     acno = input('Enter customer Account No :')
@@ -251,9 +238,7 @@ def close_account():
     conn.close()
 
 def active_account():
-    conn = mysql.connector.connect(
-        host='localhost', database='bankproject', user='root', password='sum@1@mysql#74Z'
-    )
+    conn = get_connection()
     cursor = conn.cursor()
     clear()
     acno = input('Enter customer Account No :')

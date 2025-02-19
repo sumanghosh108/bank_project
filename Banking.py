@@ -206,26 +206,6 @@ def add_account():
         if conn.is_connected():
             cursor.close()
             conn.close()
-# def add_account():
-#     conn = mysql.connector.connect(
-#         host='localhost', database='bankproject', user='root', password='sum@1@mysql#74Z'
-#     )
-#     cursor = conn.cursor()
-#     name = input('Enter Name :')
-#     addr = input('Enter address :')
-#     phone = input('Enter Phone no :')
-#     email = input('Enter Email :')
-#     aadhar = input('Enter Aadhar no :')
-#     active = input('Account Type (saving/current) :')
-#     balance = input('Enter opening balance :')
-#     sql = ('INSERT INTO customer (name, address, phone, email, aadhar_no, acc_type, balance, status) '
-#            'VALUES (%s, %s, %s, %s, %s, %s, %s, %s)')
-#     cursor.execute(sql, (name, addr, phone, email, aadhar, active, balance,"active"))
-#     acno=cursor.lastrowid
-#     conn.commit()
-#     print('\n\nNew customer added successfully.')
-#     input('\n\n\n Press any key to continue...')
-#     conn.close()
 
 def modify_account():
     conn = mysql.connector.connect(

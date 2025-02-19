@@ -10,7 +10,7 @@ A comprehensive banking management system built with Python and MySQL that allow
 •	Deposit funds
 •	Withdraw funds
 •	View transaction history
-### earch Functionality 
+### Search Functionality 
 •	Search by Account Number
 •	Search by Aadhar Card
 •	Search by Phone Number

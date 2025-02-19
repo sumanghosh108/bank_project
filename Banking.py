@@ -6,13 +6,13 @@ def clear():
         print()
 
 def account_status(acno):
-    conn=mysql.connector.connect(
-        host='localhost',database='bankproject',user='root',password='sum@1@mysql#74Z'
+    conn = mysql.connector.connect(
+        host='localhost', database='bankproject', user='root', password='sum@1@mysql#74Z'
     )
-    cursor=conn.cursor()
-    sql="select status, balance from customer where acno='"+acno+"'"
-    cursor.execute(sql)
-    result=cursor.fetchone()
+    cursor = conn.cursor()
+    sql = "SELECT status, balance FROM customer WHERE acno=%s"
+    cursor.execute(sql, (acno,))
+    result = cursor.fetchone()
     conn.close()
     return result
 
@@ -28,7 +28,8 @@ def deposite_amount():
     result=account_status(acno)
     if result [0]=='active':
         sql1="update customer set balance = balance"+amount + 'where acno = '+acno+' and status="active";'
-        sql2='insert into transaction(amount,type,acno,dot) values(' + amount +',"deposite",'+acno+',"'+str(today)+'");'
+        sql2=('INSERT INTO transaction (amount, type, acno, dot) '
+        'VALUES (%s, "deposit", %s, %s)')
         cursor.execute(sql2)
         cursor.execute(sql1)
         print('\n\namount deposited')

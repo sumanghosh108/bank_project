@@ -17,50 +17,50 @@ def account_status(acno):
     return result
 
 def deposite_amount():
-    conn=mysql.connector.connect(
-        host='localhost',database='bankproject',user='root',password='sum@1@mysql#74Z'
+    conn = mysql.connector.connect(
+        host='localhost', database='bankproject', user='root', password='sum@1@mysql#74Z'
     )
-    cursor=conn.cursor()
+    cursor = conn.cursor()
     clear()
-    acno=input('Enter account No :')
-    amount=input('Enter amount :')
-    today=date.today()
-    result=account_status(acno)
-    if result [0]=='active':
-        sql1="update customer set balance = balance"+amount + 'where acno = '+acno+' and status="active";'
-        sql2=('INSERT INTO transaction (amount, type, acno, dot) '
-        'VALUES (%s, "deposit", %s, %s)')
-        cursor.execute(sql2)
-        cursor.execute(sql1)
-        print('\n\namount deposited')
-        
+    acno = input('Enter account No :')
+    amount = input('Enter amount :')
+    today = date.today()
+    result = account_status(acno)
+    if result and result[0] == 'active':
+        sql1 = "UPDATE customer SET balance = balance + %s WHERE acno = %s AND status='active'"
+        sql2 = "INSERT INTO transaction (amount, type, acno, dot) VALUES (%s, 'deposit', %s, %s)"
+        cursor.execute(sql1, (amount, acno))
+        cursor.execute(sql2, (amount, acno, today))
+        conn.commit()
+        print('\n\nAmount deposited')
     else:
         print('\n\nClosed or Suspended Account...')
-    
-    wait=input('\n\n\n Press any key to continue...')
+    input('\n\n\n Press any key to continue...')
     conn.close()
-    
-def withdraw_ammount():
-    conn=mysql.connector.connect(
-        host='localhost',database='bankproject',user='root',password='sum@1@mysql#74Z'
+
+def withdraw_amount():
+    conn = mysql.connector.connect(
+        host='localhost', database='bankproject', user='root', password='sum@1@mysql#74Z'
     )
-    cursor=conn.cursor()
+    cursor = conn.cursor()
     clear()
-    acno=input('Enter account No :')
-    amount=input('Enter amount :')
-    today=date.today()
-    result=account_status(acno)
-    if result [0]=='active':
-        sql1="update customer set balance = balance-"+amount + 'where acno = '+acno+' and status="active";'
-        sql2='insert into transaction(amount,type,acno,dot) values(' + amount +',"deposite",'+acno+',"'+str(today)+'");'
-        cursor.execute(sql2)
-        cursor.execute(sql1)
-        print('\n\namount Withdrawn')
-        
+    acno = input('Enter account No :')
+    amount = input('Enter amount :')
+    today = date.today()
+    result = account_status(acno)
+    if result and result[0] == 'active':
+        sql1 = "UPDATE customer SET balance = balance - %s WHERE acno = %s AND status='active'"
+        sql2 = "INSERT INTO transaction (amount, type, acno, dot) VALUES (%s, 'withdraw', %s, %s)"
+        cursor.execute(sql1, (amount, acno))
+        cursor.execute(sql2, (amount, acno, today))
+        conn.commit()
+        print('\n\nAmount Withdrawn')
     else:
         print('\n\nClosed or Suspended Account or Insufficient amount.')
-    
-    wait=input('\n\n\n Press any key to continue...')
+    input('\n\n\n Press any key to continue...')
+    conn.close()
+
+def transaction_menu():
     conn.close()
     
 def transaction_menu():
